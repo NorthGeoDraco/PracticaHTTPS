@@ -1,6 +1,16 @@
 server {
     listen 80;
     server_name node.ejemplo.test;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name node.ejemplo.test;
+
+    ssl_certificate     /etc/ssl/certs/node.ejemplo.test.crt;
+    ssl_certificate_key /etc/ssl/private/node.ejemplo.test.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
 
     location / {
         proxy_pass http://127.0.0.1:3000;
